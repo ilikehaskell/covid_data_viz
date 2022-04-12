@@ -16,14 +16,21 @@ def vaccine_widget(groups, special_groups, key = 0):
     country = st.selectbox('Country', options=countries, index=romania_index, key=key)
     country_df = vaccine_df[vaccine_df.ReportingCountry == country]
 
+    
     denominator_group_dict = country_df.groupby('TargetGroup').first().Denominator.fillna(0).to_dict()
     with st.expander('Country Info'):
         get_country_info(country, country_df)
+    # handle countries with no distinction betweeen underage groups
+    underage_group_set = set(["Age0_4","Age5_9","Age10_14","Age15_17"])
+    if underage_group_set <= set(groups) and not (set(underage_group_set) <= set(denominator_group_dict)):
+        groups = (set(groups) - set(underage_group_set)) | set(["Age<18"])
+        groups = list(groups)
+
 
     population_considered = sum(denominator_group_dict[group] for group in groups+special_groups if group in denominator_group_dict)
-    
+
     if not population_considered:
-        st.header('There is no one in the target groups, using data for all population')
+        st.warning('There is no one in the target groups, using data for all population')
         groups = ['ALL']
         population_considered = sum(denominator_group_dict[group] for group in groups+special_groups if group in denominator_group_dict)
 
