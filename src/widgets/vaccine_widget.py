@@ -14,6 +14,8 @@ def vaccine_widget(groups, special_groups, key = 0):
 
     countries = sorted(list(set(vaccine_df.ReportingCountry)))
     
+    
+
     romania_index = countries.index('RO')
     country = st.selectbox('Country', options=countries, index=romania_index, key=key)
     country_df = vaccine_df[vaccine_df.ReportingCountry == country]
