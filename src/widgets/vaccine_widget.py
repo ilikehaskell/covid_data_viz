@@ -7,9 +7,11 @@ from ..plot_utils import plotable
 
 from .country_info import get_country_info
 
+plot_type_dict = {'bar':st.bar_chart, 'area': st.area_chart, 'line':st.line_chart}
 
 def vaccine_widget(groups, special_groups, key = 0):
-    
+    plot_type = st.sidebar.selectbox('Plot type', ['bar', 'area', 'line'])
+
     countries = sorted(list(set(vaccine_df.ReportingCountry)))
     
     romania_index = countries.index('RO')
@@ -79,12 +81,12 @@ def vaccine_widget(groups, special_groups, key = 0):
     full_df = full_df.fillna(0).cumsum().fillna(0)
 
     st.header('Number of doses received')
-    st.line_chart(
+    plot_type_dict[plot_type](
         plotable(full_df['NumberDosesReceived'])
         )
 
     st.header('Number of doses left')
-    st.line_chart(
+    plot_type_dict[plot_type](
         plotable(full_df['RemainingJabs'])
         )
 
@@ -96,7 +98,7 @@ def vaccine_widget(groups, special_groups, key = 0):
     full_df['FullVaccinePercentage'] = full_df.TotalFullVaccine / country_population
     st.header('Number of fully applied vaccines')
     
-    st.line_chart(
+    plot_type_dict[plot_type](
         plotable(full_df.FullVaccine)
         )
 
@@ -104,7 +106,7 @@ def vaccine_widget(groups, special_groups, key = 0):
 
     st.header('Percentage of fully vaccinated from selected groups')
     
-    st.line_chart(
+    plot_type_dict[plot_type](
         plotable(full_df, ['FullVaccinePercentage', 'FullVaccinePercentageFromGroups'])
         )
     # st.write(plotable(full_df, ['FullVaccinePercentage', 'FullVaccinePercentageFromGroups']).index)
@@ -134,6 +136,6 @@ def vaccine_widget(groups, special_groups, key = 0):
     ################
 
     st.header('Number of fully vaccinated')
-    st.line_chart(full_df['TotalFullVaccine'])
+    plot_type_dict[plot_type](full_df['TotalFullVaccine'])
 
     
