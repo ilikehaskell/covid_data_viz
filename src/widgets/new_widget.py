@@ -3,29 +3,37 @@ import pandas as pd
 
 from ..data_store import hospital_admission_df
 
-plot_type_dict = {'bar':st.bar_chart, 'area': st.area_chart, 'line':st.line_chart}
+plot_type_dict = { 'area': st.area_chart, 'bar':st.bar_chart,'line':st.line_chart}
 
 def hospital_admission_widget(key = 0):
-    plot_type = st.sidebar.selectbox('Plot type', ['bar', 'area', 'line'])
+    plot_type = st.sidebar.selectbox('Plot type', ['area', 'bar', 'line'])
     
 
     countries = sorted(list(set(hospital_admission_df.country)))
-    romania_index = countries.index('Romania')
+    romania_index = countries.index('Czechia')
     country = st.selectbox('Country', options=countries, index=romania_index, key=key)
-
     country_df = hospital_admission_df[hospital_admission_df.country == country]
-    country_df = country_df.swapaxes(0,1)
-    country_df = country_df.rename(columns={'year_week': 'YW'})
-    country_df = country_df.set_index('YW')
-    #st.header("")
-    cd_df = pd.concat( [country_df[country_df.indicator == 'value'].rate_14_day.rename('value'), country_df[country_df.indicator == 'deaths'].rate_14_day.rename('deaths')], axis=1)
 
+    
+    # Daily adm
+    cd_df1 = country_df.set_index('date')
+    cd_df1 = cd_df1[cd_df1.indicator == 'Daily hospital occupancy']
 
-
-    #st.line_chart(cd_df)
     st.header("Hospital admissions")
-    plot_type_dict[plot_type](country_df, )
+    plot_type_dict[plot_type](cd_df1['value'])
    
-   #st.line_chart(country_df.head())
 
-    # st.line_chart()
+    # Daily ICU
+    cd_df2 = country_df.set_index('date')
+    cd_df2 = cd_df2[cd_df2.indicator == 'Daily ICU occupancy']
+
+    st.header("Daily ICU occupancy")
+    plot_type_dict[plot_type](cd_df2['value'])
+    
+    
+    # Weekly adm
+    cd_df3 = country_df.set_index('year_week')
+    cd_df3 = cd_df3[cd_df3.indicator == 'Weekly new hospital admissions per 100k']
+
+    st.header("Weekly new hospital admissions per 100k")
+    plot_type_dict[plot_type](cd_df3['value'])
