@@ -1,7 +1,6 @@
 import streamlit as st
 
 def intro_widget():
-    
     st.markdown('# ** Information Visualization Project **')
     st.markdown('### ** Team: Bogdan Ouatu, Lida Ghadamiyan, Smit Oanea **')
     
