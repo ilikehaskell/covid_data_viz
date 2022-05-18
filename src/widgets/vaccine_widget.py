@@ -12,6 +12,9 @@ plot_type_dict = {'bar':st.bar_chart, 'area': st.area_chart, 'line':st.line_char
 def vaccine_widget(groups, special_groups, key = 0):
     plot_type = st.sidebar.selectbox('Plot type', ['bar', 'area', 'line'])
 
+    
+    st.markdown('The coronavirus COVID-19 is affecting 227 countries and territories. The day is reset after midnight GMT+0. The list of countries and their regional classification is based on the United Nations Geoscheme.')
+    
     countries = sorted(list(set(vaccine_df.ReportingCountry)))
     
     

@@ -18,7 +18,7 @@ def get_groups(st=st, key = 0):
         "LTCF",
         "AgeUNK",
         ]
-    groups_exp = st.expander('Age & special groups', expanded = True)
+    groups_exp = st.expander('Age & special groups', expanded = False)
 
     form = groups_exp.form('groups form')
     age_st, age_end = form.select_slider(
