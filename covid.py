@@ -6,6 +6,8 @@ from src.widgets.variants_widget import variants_widget
 from src.widgets.notification_rate_widget import notification_rate_widget
 from src.widgets.new_widget import hospital_admission_widget
 
+from src.widgets.intro_widget import intro_widget
+
 from src.pdf import get_notification_pdf, get_vaccine_pdf
 from src.widgets.age_groups import get_groups
 
@@ -14,9 +16,27 @@ def main():
 
     columns = st.sidebar.slider('Display on columns', 1, 4, 1)
 
-    d = st.sidebar.radio("Data", "vaccine variants notification_rate hospital_admission".split())
+    d = st.sidebar.radio("Data", "intro vaccine variants notification_rate hospital_admission".split())
 
+    
+    if d == 'intro':
+        
+        for column_idx, column in enumerate(st.columns(columns)):
+            with column:
+                intro_widget()
+        
+        
     if d == 'vaccine':
+        
+        st.title('Vaccine data')
+        
+        """
+        * Selectable special groups:
+          * HCW - health care worker
+          * LTCF - long term care facilities
+          * AgeUNK - Unknow age
+        """
+        
         ggroups = get_groups()
         
         for column_idx, column in enumerate(st.columns(columns)):
