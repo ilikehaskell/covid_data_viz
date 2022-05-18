@@ -2,3 +2,6 @@ poetry.lock
 .python-version
 *.pyc
 covid.csv
+notification_rate_df.csv
+vaccine_df.csv
+variants_df.csv
