@@ -18,7 +18,13 @@ def get_notification_rate_df():
     return pd.read_csv(notification_rate_data)
 
 
+@st.cache(allow_output_mutation=True)
+def get_hospital_admission_df():
+    hospital_admission_data = "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/csv/data.csv"
+    return pd.read_csv(hospital_admission_data)
+
 
 vaccine_df = get_vaccine_df()
 variants_df = get_variants_df()
 notification_rate_df = get_notification_rate_df()
+hospital_admission_df = get_hospital_admission_df()
