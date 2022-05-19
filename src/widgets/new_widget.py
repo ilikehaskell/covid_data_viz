@@ -1,6 +1,15 @@
 import streamlit as st
 import pandas as pd
 
+
+import numpy as np
+import cufflinks as cf
+import plotly.express as px
+import plotly.graph_objects as go
+
+cf.go_offline()
+cf.set_config_file(offline=False, world_readable=True)
+
 from ..data_store import hospital_admission_df
 
 plot_type_dict = { 'area': st.area_chart, 'bar':st.bar_chart,'line':st.line_chart}
@@ -37,3 +46,6 @@ def hospital_admission_widget(key = 0):
 
     st.header("Weekly new hospital admissions per 100k")
     plot_type_dict[plot_type](cd_df3['value'])
+    
+    
+    

@@ -1,6 +1,14 @@
 import streamlit as st
 import pandas as pd
 
+import numpy as np
+import cufflinks as cf
+import plotly.express as px
+import plotly.graph_objects as go
+
+cf.go_offline()
+cf.set_config_file(offline=False, world_readable=True)
+
 from ..data_store import notification_rate_df
 
 plot_type_dict = {'bar':st.bar_chart, 'area': st.area_chart, 'line':st.line_chart}
@@ -24,3 +32,22 @@ def notification_rate_widget(key = 0):
     plot_type_dict[plot_type](cd_df.deaths/cd_df.cases/10)
 
     # st.line_chart()
+    
+    
+    
+    # violin
+    
+    #cases
+    st.header('Violin plot cases')
+    st.text('The width of the violin in a certain Y point corresponds with the number of weeks in which there were Y new cases notified"')
+    fig1 = px.violin(cd_df, y="cases", box=True, points='all')
+    st.plotly_chart(fig1)
+    
+    #deaths
+    st.header('Violin plot deaths')
+    st.text('The width of the violin in a certain Y point corresponds with the number of weeks in which there were Y new deaths notified"')
+    fig2 = go.Figure(data=go.Violin(y=cd_df['deaths'], box_visible=True, line_color='green',
+                               meanline_visible=True, fillcolor='lightseagreen', opacity=0.6,
+                               x0='deaths', points='all'))
+    st.plotly_chart(fig2)
+    
