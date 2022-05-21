@@ -12,6 +12,7 @@ from src.pdf import get_notification_pdf, get_vaccine_pdf
 from src.widgets.age_groups import get_groups
 
 def main():
+    
     pdf_container = st.container()
 
     columns = st.sidebar.slider('Display on columns', 1, 4, 1)
@@ -50,6 +51,7 @@ def main():
         if d == 'variants':
             with column:
                 variants_widget(key = column_idx)
+                
         if d == 'notification_rate':
             with column:
                 notification_rate_widget(key = column_idx)
