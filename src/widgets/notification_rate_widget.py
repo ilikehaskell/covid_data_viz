@@ -14,7 +14,7 @@ from ..data_store import notification_rate_df
 plot_type_dict = {'bar':st.bar_chart, 'area': st.area_chart, 'line':st.line_chart}
 
 def notification_rate_widget(key = 0):
-    plot_type = st.sidebar.selectbox('Plot type', ['bar', 'area', 'line'])
+    plot_type = st.sidebar.selectbox('Plot type', ['bar', 'area', 'line'], key=key)
     countries = sorted(list(set(notification_rate_df.country)))
     romania_index = countries.index('Romania')
     country = st.selectbox('Country', options=countries, index=romania_index, key=key)
@@ -38,13 +38,13 @@ def notification_rate_widget(key = 0):
     # violin
     
     #cases
-    st.header('Violin plot cases')
+    st.header('Distribution of cases')
     st.text('The width of the violin in a certain Y point corresponds with the number of weeks in which there were Y new cases notified"')
     fig1 = px.violin(cd_df, y="cases", box=True, points='all')
     st.plotly_chart(fig1)
     
     #deaths
-    st.header('Violin plot deaths')
+    st.header('Distribution of deaths')
     st.text('The width of the violin in a certain Y point corresponds with the number of weeks in which there were Y new deaths notified"')
     fig2 = go.Figure(data=go.Violin(y=cd_df['deaths'], box_visible=True, line_color='green',
                                meanline_visible=True, fillcolor='lightseagreen', opacity=0.6,

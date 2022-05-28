@@ -10,7 +10,7 @@ from .country_info import get_country_info
 plot_type_dict = {'bar':st.bar_chart, 'area': st.area_chart, 'line':st.line_chart}
 
 def vaccine_widget(groups, special_groups, key = 0):
-    plot_type = st.sidebar.selectbox('Plot type', ['bar', 'area', 'line'])
+    plot_type = st.sidebar.selectbox('Plot type', ['bar', 'area', 'line'], key=key)
 
     
     st.markdown('The coronavirus COVID-19 is affecting 227 countries and territories. The day is reset after midnight GMT+0. The list of countries and their regional classification is based on the United Nations Geoscheme.')
@@ -109,10 +109,16 @@ def vaccine_widget(groups, special_groups, key = 0):
 
 
 
-    st.header('Percentage of fully vaccinated from selected groups')
+    st.header('Percentage of fully vaccinated from selected groups / Groups population')
     
     plot_type_dict[plot_type](
-        plotable(full_df, ['FullVaccinePercentage', 'FullVaccinePercentageFromGroups'])
+        plotable(full_df, ['FullVaccinePercentageFromGroups'])
+        )
+
+    st.header('Percentage of fully vaccinated from selected groups / Entire population')
+    
+    plot_type_dict[plot_type](
+        plotable(full_df, ['FullVaccinePercentage'])
         )
     # st.write(plotable(full_df, ['FullVaccinePercentage', 'FullVaccinePercentageFromGroups']).index)
     ##############

@@ -15,7 +15,7 @@ plot_type_dict = {'bar':st.bar_chart, 'area': st.area_chart, 'line':st.line_char
 def variants_widget(key=0):
     
     st.header("Variants")
-    plot_type = st.sidebar.selectbox('Plot type', ['bar', 'area', 'line'])
+    plot_type = st.sidebar.selectbox('Plot type', ['bar', 'area', 'line'], key=key)
     
     st.markdown('The coronavirus COVID-19 is affecting 227 countries and territories. The day is reset after midnight GMT+0. The list of countries and their regional classification is based on the United Nations Geoscheme.')
     
@@ -29,7 +29,7 @@ def variants_widget(key=0):
     df = vdf['variant'].value_counts().sort_values(ascending=False).to_frame()
     
     # classic
-    st.header("Varinats Count")
+    st.header("Variants Count")
     plot_type_dict[plot_type](df['variant'])
     
     
@@ -40,6 +40,6 @@ def variants_widget(key=0):
     
     
     # violin
-    st.header('Violin plot variants')
+    st.header('Distribution of variants')
     fig1 = px.violin(vdf, y="variant", box=True, points='all')
     st.plotly_chart(fig1)
