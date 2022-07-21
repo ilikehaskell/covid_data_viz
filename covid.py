@@ -17,7 +17,7 @@ def main():
 
     columns = st.sidebar.slider('Display on columns', 1, 4, 1)
 
-    d = st.sidebar.radio("Data", "intro vaccine variants notification_rate hospital_admission".split())
+    d = st.sidebar.selectbox("Select page", "intro vaccine variants notification_rate hospital_admission".split())
 
     
     if d == 'intro':
@@ -60,9 +60,9 @@ def main():
             with column:
                 hospital_admission_widget(key = column_idx)
 
-    if st.sidebar.checkbox('View Vaccine PDF'):
+    if st.sidebar.checkbox('Display Vaccine PDF'):
         get_vaccine_pdf(pdf_container)
-    if st.sidebar.checkbox('View Notification PDF'):
+    if st.sidebar.checkbox('Display Notification PDF'):
         get_notification_pdf(pdf_container)
 
 
